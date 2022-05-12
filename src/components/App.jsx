@@ -1,8 +1,10 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
 import { ContactForm } from './ContactForm/ContactForm';
 import { ContactsList } from './ContactsList/ContactsList';
 import { Filter } from 'components/Filter/Filter';
+import { Container } from './container/container';
 
 export class App extends Component {
   state = {
@@ -13,6 +15,17 @@ export class App extends Component {
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
     filter: '',
+  };
+
+  static propTypes = {
+    contacts: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        number: PropTypes.number.isRequired,
+      })
+    ),
+    filter: PropTypes.string,
   };
 
   addContact = data => {
@@ -39,7 +52,7 @@ export class App extends Component {
 
   getFiltredContacts = () => {
     const { filter, contacts } = this.state;
-    const lowerFilter = filter.toLowerCase();
+    const lowerFilter = filter.toLowerCase().trim();
     return contacts.filter(contact =>
       contact.name.toLocaleLowerCase().includes(lowerFilter)
     );
@@ -56,14 +69,18 @@ export class App extends Component {
     const filteredContacts = this.getFiltredContacts();
     return (
       <>
-        <h1>Phonebook</h1>
-        <ContactForm onSubmit={this.addContact} />
-        <h2>Contacts</h2>
-        <Filter value={filter} onChange={this.changeFilter} />
-        <ContactsList
-          contacts={filteredContacts}
-          onDeleteContact={this.deleteContact}
-        />
+        <Container>
+          <h1>Phonebook</h1>
+          <ContactForm onSubmit={this.addContact} />
+        </Container>
+        <Container>
+          <h2>Contacts</h2>
+          <Filter value={filter} onChange={this.changeFilter} />
+          <ContactsList
+            contacts={filteredContacts}
+            onDeleteContact={this.deleteContact}
+          />
+        </Container>
       </>
     );
   }

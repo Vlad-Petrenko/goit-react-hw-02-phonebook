@@ -1,5 +1,12 @@
 import { Component } from 'react';
-import { nanoid } from 'nanoid';
+import PropTypes from 'prop-types';
+import {
+  FormContacts,
+  LabelForm,
+  SubmitBtn,
+  TitleForm,
+  InputForm,
+} from './ContactForm.styled';
 
 export class ContactForm extends Component {
   state = {
@@ -7,7 +14,11 @@ export class ContactForm extends Component {
     number: '',
   };
 
-  nameInputId = nanoid(5);
+  static propTypes = {
+    name: PropTypes.string,
+    number: PropTypes.number,
+    onSubmit: PropTypes.func.isRequired,
+  };
 
   handleSubmit = e => {
     e.preventDefault();
@@ -29,10 +40,10 @@ export class ContactForm extends Component {
     const { name, number } = this.state;
     return (
       <>
-        <form onSubmit={this.handleSubmit}>
-          <label htmlFor={this.nameInputId}>
-            Name
-            <input
+        <FormContacts onSubmit={this.handleSubmit}>
+          <LabelForm>
+            <TitleForm>Name</TitleForm>
+            <InputForm
               type="text"
               name="name"
               value={name}
@@ -41,9 +52,10 @@ export class ContactForm extends Component {
               title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
               required
             />
-          </label>
-          <label htmlFor="">
-            <input
+          </LabelForm>
+          <LabelForm>
+            <TitleForm>Number</TitleForm>
+            <InputForm
               type="tel"
               name="number"
               value={number}
@@ -52,9 +64,9 @@ export class ContactForm extends Component {
               title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
               required
             />
-          </label>
-          <button type="submit">Add contact</button>
-        </form>
+          </LabelForm>
+          <SubmitBtn type="submit">Add contact</SubmitBtn>
+        </FormContacts>
       </>
     );
   }

@@ -1,9 +1,16 @@
-import { DeleteBtn } from '../DeleteBtn/DeleteBtn';
-export const Contacts = ({ name, number }) => {
+import PropTypes from 'prop-types';
+import { ItemContact } from './Contacts.styled';
+export const Contacts = ({ name, number, children }) => {
   return (
-    <li>
+    <ItemContact>
       {name}: {number}
-      <DeleteBtn />
-    </li>
+      {children}
+    </ItemContact>
   );
+};
+
+Contacts.propType = {
+  name: PropTypes.string.isRequired,
+  number: PropTypes.number.isRequired,
+  children: PropTypes.node,
 };
