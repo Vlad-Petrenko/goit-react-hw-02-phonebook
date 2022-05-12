@@ -7,8 +7,13 @@ export class ContactsList extends Component {
     return (
       <>
         <ul>
-          {contacts.map(({ id, name, number }) => (
-            <Contacts key={id} name={name} number={number} />
+          {contacts.map(({ id, name, number, onDeleteContact }) => (
+            <Contacts
+              key={id}
+              name={name}
+              number={number}
+              onDeleteContact={onDeleteContact}
+            />
           ))}
         </ul>
       </>
