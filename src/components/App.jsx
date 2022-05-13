@@ -1,5 +1,4 @@
 import { Component } from 'react';
-import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
 import { ContactForm } from './ContactForm/ContactForm';
 import { ContactsList } from './ContactsList/ContactsList';
@@ -17,31 +16,22 @@ export class App extends Component {
     filter: '',
   };
 
-  static propTypes = {
-    contacts: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        number: PropTypes.number.isRequired,
-      })
-    ),
-    filter: PropTypes.string,
-  };
-
   addContact = data => {
     const { contacts } = this.state;
     const { name, number } = data;
-    const searchContact = contacts.some(contact => contact.name === data.name);
+    const searchContact = contacts.some(
+      contact => contact.name.toLowerCase() === data.name.toLowerCase()
+    );
     searchContact
       ? alert(`${data.name} is already in contacts`)
       : this.setState(({ contacts }) => ({
           contacts: [
+            ...contacts,
             {
               id: nanoid(5),
               name,
               number,
             },
-            ...contacts,
           ],
         }));
   };

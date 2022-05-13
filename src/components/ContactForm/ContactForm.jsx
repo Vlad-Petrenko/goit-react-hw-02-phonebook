@@ -15,8 +15,6 @@ export class ContactForm extends Component {
   };
 
   static propTypes = {
-    name: PropTypes.string,
-    number: PropTypes.number,
     onSubmit: PropTypes.func.isRequired,
   };
 
